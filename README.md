@@ -1,12 +1,11 @@
 # any-scroll  [![NPM Version][npm-image]][npm-url] [![NPM Downloads][downloads-image]][downloads-url] [![npm bundle size (minified + gzip)][size-image]][size-url] 
 模拟scrollview, 基于vue制作, 可加工成Tab/SwipeOut/Slider/Carousel等组件.
 
-[size-image]: https://img.shields.io/bundlephobia/minzip/any-scroll.svg
+[size-image]: https://badgen.net/bundlephobia/minzip/any-scroll
 [size-url]: https://bundlephobia.com/result?p=any-scroll
 [npm-image]: https://img.shields.io/npm/v/any-scroll.svg
 [npm-url]: https://npmjs.org/package/any-scroll
-
-[downloads-image]: https://img.shields.io/npm/dm/any-scroll.svg
+[downloads-image]: https://badgen.net/npm/dt/any-scroll
 [downloads-url]: https://npmjs.org/package/any-scroll
 
 
