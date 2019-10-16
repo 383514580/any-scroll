@@ -7,5 +7,13 @@ module.exports = {
       extract: false
     },
 
-    publicPath: ''
+    publicPath: '',
+
+    // configureWebpack:{
+    //   externals:{
+    //     commonjs: 'any-touch',
+    //     commonjs2:'any-touch',
+    //     'any-touch': "AnyTouch"
+    //   }
+    // }
 }

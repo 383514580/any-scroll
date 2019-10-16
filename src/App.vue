@@ -32,12 +32,24 @@
           overflowY(禁止y轴运动)
           <input type="checkbox" v-model="overflowY">
         </label>
+
+        <label class="inline">
+          isShowXBar(显示x滚动条)
+          <input type="checkbox" v-model="isShowXBar">
+        </label>
+
+        <label class="inline">
+          isShowYBar(显示y滚动条)
+          <input type="checkbox" v-model="isShowYBar">
+        </label>
       </article>
 
       <any-scroll
         ref="scroll"
         :width="width"
         :height="height"
+        :is-show-x-bar="isShowXBar"
+        :is-show-y-bar="isShowYBar"
         :overflow-x="overflowX"
         :overflow-y="overflowY"
         :bounce-distance="bounceDistance"
@@ -165,6 +177,8 @@ export default {
             bounceDistance: 150,
             overflowX: false,
             overflowY: false,
+            isShowXBar:true,
+            isShowYBar: true,
             scrollTop: 0,
             scrollLeft: 0,
             bounceState: { top: STATE_STATIC, left: STATE_STATIC, right: STATE_STATIC, bottom: STATE_STATIC },

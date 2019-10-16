@@ -15,7 +15,7 @@
     "dist"
   ],
   "dependencies": {
-    "any-touch": "^0.3.3",
+    "any-touch": "^0.4.11",
     "chalk": "^2.4.2",
     "core-js": "^2.6.5",
     "gh-pages": "^2.0.1",
