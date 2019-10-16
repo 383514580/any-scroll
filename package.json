@@ -1,6 +1,6 @@
 {
   "name": "any-scroll",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/AnyScroll.common.js",
   "module": "dist/AnyScroll.common.js",
   "browser": "dist/AnyScroll.umd.js",

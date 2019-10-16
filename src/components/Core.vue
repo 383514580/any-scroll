@@ -1,81 +1,83 @@
 <template>
-  <div :style="viewStyle" class="any-scroll-view">
-    <!-- 固定头 -->
-    <header v-if="$slots.top || $scopedSlots.top" class="any-scroll-view__top">
-      <slot
-        name="top"
-        :scrollTop="scrollY"
-        :scrollLeft="scrollX"
-        :directionX="directionX"
-        :directionY="directionY"
-      ></slot>
-    </header>
+    <div :style="viewStyle" class="any-scroll-view">
+        <!-- 固定头 -->
+        <header v-if="$slots.top || $scopedSlots.top" class="any-scroll-view__top">
+            <slot
+                name="top"
+                :scrollTop="scrollY"
+                :scrollLeft="scrollX"
+                :directionX="directionX"
+                :directionY="directionY"
+            ></slot>
+        </header>
 
-    <!-- 上层 -->
-    <section v-if="$slots.upper || $scopedSlots.upper" class="any-scroll-view__upper">
-      <slot
-        name="upper"
-        :scrollTop="scrollY"
-        :scrollLeft="scrollX"
-        :directionX="directionX"
-        :directionY="directionY"
-      ></slot>
-    </section>
+        <!-- 上层 -->
+        <section v-if="$slots.upper || $scopedSlots.upper" class="any-scroll-view__upper">
+            <slot
+                name="upper"
+                :scrollTop="scrollY"
+                :scrollLeft="scrollX"
+                :directionX="directionX"
+                :directionY="directionY"
+            ></slot>
+        </section>
 
-    <!-- 下层 -->
-    <section v-if="$slots.under || $scopedSlots.under" class="any-scroll-view__under">
-      <slot
-        name="under"
-        :scrollTop="scrollY"
-        :scrollLeft="scrollX"
-        :directionX="directionX"
-        :directionY="directionY"
-      ></slot>
-    </section>
+        <!-- 下层 -->
+        <section v-if="$slots.under || $scopedSlots.under" class="any-scroll-view__under">
+            <slot
+                name="under"
+                :scrollTop="scrollY"
+                :scrollLeft="scrollX"
+                :directionX="directionX"
+                :directionY="directionY"
+            ></slot>
+        </section>
 
-    <!-- 滚动条 -->
-    <scroll-bar
-      :scroll-x-state="scrollXState"
-      :scroll-y-state="scrollYState"
-      :scroll-x="scrollX"
-      :scroll-y="scrollY"
-      :overflow-x="overflowX"
-      :overflow-y="overflowY"
-      :content-width="contentWidth"
-      :content-height="contentHeight"
-      :view-width="viewWidth"
-      :view-height="viewHeight"
-      :is-out-of-top="isOutOfTop"
-      :is-out-of-left="isOutOfLeft"
-      :is-out-of-right="isOutOfRight"
-      :is-out-of-bottom="isOutOfBottom"
-      :outOfTopDistance="outOfTopDistance"
-      :outOfBottomDistance="outOfBottomDistance"
-      :outOfRightDistance="outOfRightDistance"
-      :outOfLeftDistance="outOfLeftDistance"
-    />
+        <!-- 滚动条 -->
+        <scroll-bar
+            :is-show-x="isShowXBar"
+            :is-show-y="isShowYBar"
+            :scroll-x-state="scrollXState"
+            :scroll-y-state="scrollYState"
+            :scroll-x="scrollX"
+            :scroll-y="scrollY"
+            :overflow-x="overflowX"
+            :overflow-y="overflowY"
+            :content-width="contentWidth"
+            :content-height="contentHeight"
+            :view-width="viewWidth"
+            :view-height="viewHeight"
+            :is-out-of-top="isOutOfTop"
+            :is-out-of-left="isOutOfLeft"
+            :is-out-of-right="isOutOfRight"
+            :is-out-of-bottom="isOutOfBottom"
+            :outOfTopDistance="outOfTopDistance"
+            :outOfBottomDistance="outOfBottomDistance"
+            :outOfRightDistance="outOfRightDistance"
+            :outOfLeftDistance="outOfLeftDistance"
+        />
 
-    <!-- 内容 -->
-    <div ref="content" :style="contentStyle" class="any-scroll-view__content">
-      <slot
-        :scrollTop="scrollY"
-        :scrollLeft="scrollX"
-        :directionX="directionX"
-        :directionY="directionY"
-      ></slot>
+        <!-- 内容 -->
+        <div ref="content" :style="contentStyle" class="any-scroll-view__content">
+            <slot
+                :scrollTop="scrollY"
+                :scrollLeft="scrollX"
+                :directionX="directionX"
+                :directionY="directionY"
+            ></slot>
+        </div>
+
+        <!-- 底部固定 -->
+        <footer v-if="$slots.bottom || $scopedSlots.bottom" class="any-scroll-view__bottom">
+            <slot
+                name="bottom"
+                :scrollTop="scrollY"
+                :scrollLeft="scrollX"
+                :directionX="directionX"
+                :directionY="directionY"
+            ></slot>
+        </footer>
     </div>
-
-    <!-- 底部固定 -->
-    <footer v-if="$slots.bottom || $scopedSlots.bottom" class="any-scroll-view__bottom">
-      <slot
-        name="bottom"
-        :scrollTop="scrollY"
-        :scrollLeft="scrollX"
-        :directionX="directionX"
-        :directionY="directionY"
-      ></slot>
-    </footer>
-  </div>
 </template>
 
 <script>
@@ -102,7 +104,7 @@ import AnyTouch from 'any-touch';
 import raf from 'raf';
 import ScrollBar from '@/components/ScrollBar';
 export default {
-    name: 'any-scroll-view',
+    name: 'AnyScrollView',
 
     components: { ScrollBar },
 
@@ -152,6 +154,16 @@ export default {
         overflowY: {
             type: Boolean,
             default: false
+        },
+
+        isShowXBar: {
+            type: Boolean,
+            default: true
+        },
+
+        isShowYBar: {
+            type: Boolean,
+            default: true
         }
     },
 

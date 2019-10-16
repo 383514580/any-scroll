@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div v-if="!overflowX" class="any-scroll__bar-x" :style="styleX"></div>
-    <div v-if="!overflowY" class="any-scroll__bar-y" :style="styleY"></div>
-  </div>
+    <div>
+        <div v-if="isShowX && !overflowX" class="any-scroll__bar-x" :style="styleX"></div>
+        <div v-if="isShowY && !overflowY" class="any-scroll__bar-y" :style="styleY"></div>
+    </div>
 </template>
 
 <script>
@@ -11,6 +11,14 @@ export default {
     name: 'ScrollBar',
 
     props: {
+        isShowX: {
+            type: Boolean,
+            default: true
+        },
+        isShowY: {
+            type: Boolean,
+            default: true
+        },
         scrollX: {
             type: Number
         },
