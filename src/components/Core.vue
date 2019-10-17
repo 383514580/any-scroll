@@ -164,6 +164,11 @@ export default {
         isShowYBar: {
             type: Boolean,
             default: true
+        },
+
+        isPreventDefault: {
+            type:Boolean,
+            default: false
         }
     },
 
@@ -384,7 +389,7 @@ export default {
     },
 
     mounted() {
-        const at = new AnyTouch(this.$el);
+        const at = new AnyTouch(this.$el, {isPreventDefault:this.isPreventDefault});
         this.updateSize();
         try {
             const MutationObserver = MutationObserver || WebKitMutationObserver || MozMutationObserver;

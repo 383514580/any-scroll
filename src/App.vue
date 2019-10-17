@@ -1,158 +1,158 @@
 <template>
-  <main>
-    <header>
-      <h1>AnyScroll</h1>
-    </header>
+    <main>
+        <header>
+            <h1>AnyScroll</h1>
+        </header>
 
-    <article class="body">
-      <article v-if="true" class="props-form">
-        <h1>设置</h1>
+        <article class="body">
+            <article v-if="true" class="props-form">
+                <h1>设置</h1>
 
-        <label>
-          height(高度)
-          <input v-model="height" placeholder="scrollView的高度, 默认500px">
-        </label>
+                <label>
+                    height(高度)
+                    <input v-model="height" placeholder="scrollView的高度, 默认500px" />
+                </label>
 
-        <label>
-          width(宽度)
-          <input v-model="width" placeholder="不指定宽度, 默认100%;">
-        </label>
+                <label>
+                    width(宽度)
+                    <input v-model="width" placeholder="不指定宽度, 默认100%;" />
+                </label>
 
-        <label>
-          bounceDistance(可拉伸距离)
-          <input v-model="bounceDistance">
-        </label>
+                <label>
+                    bounceDistance(可拉伸距离)
+                    <input v-model="bounceDistance" />
+                </label>
 
-        <label class="inline">
-          overflowX(禁止x轴运动)
-          <input type="checkbox" v-model="overflowX">
-        </label>
+                <label class="inline">
+                    overflowX(禁止x轴运动)
+                    <input type="checkbox" v-model="overflowX" />
+                </label>
 
-        <label class="inline">
-          overflowY(禁止y轴运动)
-          <input type="checkbox" v-model="overflowY">
-        </label>
+                <label class="inline">
+                    overflowY(禁止y轴运动)
+                    <input type="checkbox" v-model="overflowY" />
+                </label>
 
-        <label class="inline">
-          isShowXBar(显示x滚动条)
-          <input type="checkbox" v-model="isShowXBar">
-        </label>
+                <label class="inline">
+                    isShowXBar(显示x滚动条)
+                    <input type="checkbox" v-model="isShowXBar" />
+                </label>
 
-        <label class="inline">
-          isShowYBar(显示y滚动条)
-          <input type="checkbox" v-model="isShowYBar">
-        </label>
-      </article>
+                <label class="inline">
+                    isShowYBar(显示y滚动条)
+                    <input type="checkbox" v-model="isShowYBar" />
+                </label>
+            </article>
 
-      <any-scroll
-        ref="scroll"
-        :width="width"
-        :height="height"
-        :is-show-x-bar="isShowXBar"
-        :is-show-y-bar="isShowYBar"
-        :overflow-x="overflowX"
-        :overflow-y="overflowY"
-        :bounce-distance="bounceDistance"
-        :bounce-time="1000"
-        @bounce-state-change="bounceState=$event"
-        @scroll-state-change="scrollState=$event"
-        @scroll="scrollHandler"
-        class="scroll-view"
-      >
-        <template #top="{scrollTop, scrollLeft,directionY}">
-          <transition name="fade-up">
-            <div
-              v-if="0 >= scrollTop ||'up' === directionY"
-              class="header"
-            >scroll: {{scrollLeft}} | {{scrollTop}} 我是插槽, slot="top"</div>
-          </transition>
-        </template>
-        <template v-if="0 < data.length" #under>
-          <h1>我在后面</h1>
-        </template>
+            <any-scroll
+                ref="scroll"
+                :width="width"
+                :height="height"
+                :is-show-x-bar="isShowXBar"
+                :is-show-y-bar="isShowYBar"
+                :overflow-x="overflowX"
+                :overflow-y="overflowY"
+                :bounce-distance="bounceDistance"
+                :bounce-time="1000"
+                @bounce-state-change="bounceState=$event"
+                @scroll-state-change="scrollState=$event"
+                @scroll="scrollHandler"
+                class="scroll-view"
+            >
+                <template #top="{scrollTop, scrollLeft,directionY}">
+                    <transition name="fade-up">
+                        <div
+                            v-if="0 >= scrollTop ||'up' === directionY"
+                            class="header"
+                        >scroll: {{scrollLeft}} | {{scrollTop}} 我是插槽, slot="top"</div>
+                    </transition>
+                </template>
+                <template v-if="0 < data.length" #under>
+                    <h1>我在后面</h1>
+                </template>
 
-        <ul v-if="0 < data.length">
-          <li>
-            <label>
-              <input placeholder="请输入标题">
-            </label>
-          </li>
-          <li>
-            <label>
-              <textarea placeholder="请输入内容"></textarea>
-            </label>
-          </li>
-          <li>
-            <label>
-              <button>提交</button>
-            </label>
-          </li>
+                <ul v-if="0 < data.length">
+                    <li>
+                        <label>
+                            <input placeholder="请输入标题" />
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <textarea placeholder="请输入内容"></textarea>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <button style="background:#eee;">提交</button>
+                        </label>
+                    </li>
 
-          <li v-for="({title, author}, index) in data" :key="title+index">
-            <!-- <img :src="author.avatar_url"> -->
-            {{index}} | {{title}}
-          </li>
-        </ul>
-        <span v-else class="loading"></span>
-        <template #bottom="{scrollTop, scrollLeft,directionY}">
-          <transition name="fade-down">
-            <div
-              v-if="'down' === directionY"
-              class="footer"
-            >scroll: {{scrollLeft}} | {{scrollTop}} | 我是插槽, slot="bottom"</div>
-          </transition>
-        </template>
-      </any-scroll>
+                    <li v-for="({title, author}, index) in data" :key="title+index">
+                        <!-- <img :src="author.avatar_url"> -->
+                        {{index}} | {{title}}
+                    </li>
+                </ul>
+                <span v-else class="loading"></span>
+                <template #bottom="{scrollTop, scrollLeft,directionY}">
+                    <transition name="fade-down">
+                        <div
+                            v-if="'down' === directionY"
+                            class="footer"
+                        >scroll: {{scrollLeft}} | {{scrollTop}} | 我是插槽, slot="bottom"</div>
+                    </transition>
+                </template>
+            </any-scroll>
 
-      <!-- data -->
-      <article class="dataAndMethods">
-        <table>
-          <tr>
-            <td>🌀 弹簧状态</td>
-            <td>
-              顶部: {{bounceState.top}}
-              <br>
-              右侧: {{bounceState.right}}
-              <br>
-              底部: {{bounceState.bottom}}
-              <br>
-              左侧: {{bounceState.left}}
-            </td>
-          </tr>
-          <tr>
-            <td>🚂 滚动状态</td>
-            <td>
-              X轴: {{scrollState.x}}
-              <br>
-              Y轴: {{scrollState.y}}
-            </td>
-          </tr>
+            <!-- data -->
+            <article class="dataAndMethods">
+                <table>
+                    <tr>
+                        <td>🌀 弹簧状态</td>
+                        <td>
+                            顶部: {{bounceState.top}}
+                            <br />
+                            右侧: {{bounceState.right}}
+                            <br />
+                            底部: {{bounceState.bottom}}
+                            <br />
+                            左侧: {{bounceState.left}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>🚂 滚动状态</td>
+                        <td>
+                            X轴: {{scrollState.x}}
+                            <br />
+                            Y轴: {{scrollState.y}}
+                        </td>
+                    </tr>
 
-          <tr>
-            <td>↔ scrollLeft</td>
-            <td>{{scrollLeft}}</td>
-          </tr>
+                    <tr>
+                        <td>↔ scrollLeft</td>
+                        <td>{{scrollLeft}}</td>
+                    </tr>
 
-          <tr>
-            <td>↕ scrollTop</td>
-            <td>{{scrollTop}}</td>
-          </tr>
-        </table>
+                    <tr>
+                        <td>↕ scrollTop</td>
+                        <td>{{scrollTop}}</td>
+                    </tr>
+                </table>
 
-        <!-- 表单 -->
-        <div class="form">
-          <button @click="test">测试</button>
+                <!-- 表单 -->
+                <div class="form">
+                    <button @click="test">测试</button>
 
-          <button @click="scrollUp">模拟拖拽向上</button>
-          <button @click="scrollDown">模拟拖拽向下</button>
-          <button @click="scrollLeftHandler">模拟拖拽向左</button>
-          <button @click="scrollRightHandler">模拟拖拽向右</button>
+                    <button @click="scrollUp">模拟拖拽向上</button>
+                    <button @click="scrollDown">模拟拖拽向下</button>
+                    <button @click="scrollLeftHandler">模拟拖拽向左</button>
+                    <button @click="scrollRightHandler">模拟拖拽向右</button>
 
-          <button @click="reset">复位</button>
-        </div>
-      </article>
-    </article>
-  </main>
+                    <button @click="reset">复位</button>
+                </div>
+            </article>
+        </article>
+    </main>
 </template>
 
 <script>
@@ -177,7 +177,7 @@ export default {
             bounceDistance: 150,
             overflowX: false,
             overflowY: false,
-            isShowXBar:true,
+            isShowXBar: true,
             isShowYBar: true,
             scrollTop: 0,
             scrollLeft: 0,
