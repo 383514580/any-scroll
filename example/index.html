@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,14 +8,29 @@
     <!-- <script src="https://unpkg.com/any-touch/dist/any-touch.umd.min.js"></script> -->
     <script src="../packages/any-scroll/dist/any-scroll.umd.js"></script>
     <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        img {
+            display: block;
+        }
+    </style>
 </head>
+
 <body>
     <h1 id="h1"></h1>
     <h2 id="h2"></h2>
     <div id="scroll" style="border:1px solid #ccc;width:300px;height: 400px;">
         <div>
-            <h1>测试滚动</h1>
-            <img src="https://img11.360buyimg.com/babel/s590x470_jfs/t1/161913/8/8792/97057/603d9df0E9f3219cb/f47517542faa4994.jpg.webp" width="100%">
+            <h1 style=" background-image: linear-gradient(90deg, #c553a3, #5227b8);color:#fff;padding:50px;">测试滚动</h1>
+            <img src="https://images.unsplash.com/photo-1565559881319-fd630c362057?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=335&q=80"
+                width="335">
+            <img src="https://img11.360buyimg.com/babel/s590x470_jfs/t1/161913/8/8792/97057/603d9df0E9f3219cb/f47517542faa4994.jpg.webp"
+                width="100%">
+            <h1 style=" background-image: linear-gradient(90deg, #caec6a, #ffe345);color:#fff;padding:50px;">测试滚动</h1>
         </div>
     </div>
     <script>
@@ -22,4 +38,5 @@
         anyScroll(el)
     </script>
 </body>
+
 </html>
