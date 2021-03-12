@@ -45,12 +45,13 @@ export default function (el: HTMLElement, options = {}) {
     });
 
     at.on('panend', e => {
-        // _scroll([el, contentEl], [x, y], [-x, -y], 500, ([distX, distY]) => {
-        //     x = distX;
-        //     y = distY;
-        // }, id => {
-        //     rafID = id;
-        // });
+        const [distX, distY] = getResetPostion([el, contentEl], [x, y])
+        _scroll([el, contentEl], [x, y], [distX - x, distY - y], 500, ([distX, distY]) => {
+            x = distX;
+            y = distY;
+        }, id => {
+            rafID = id;
+        });
     });
 
     at.on('at:start', e => {
@@ -72,38 +73,43 @@ export default function (el: HTMLElement, options = {}) {
     });
 }
 
+
 /**
  * 设置元素的translate
  * @param el 元素
- * @param param1 坐标 
+ * @param start 起始坐标 
+ * @param delatX 坐标变化增量
+ * @param tolerance 容差
+ * @param damping 超过边界的时候变化量的衰减系数(线性关系)
+ * @returns 目标坐标
  */
-function _setContentTranslate([el, contentEl]: [HTMLElement, HTMLElement], [x, y]: [number, number], [dx, dy]: [number, number], tolerance: number = 50): [number, number] {
-    // 计算内容尺寸
+function _setContentTranslate([el, contentEl]: [HTMLElement, HTMLElement], [x, y]: [number, number], [dx, dy]: [number, number], tolerance: number = 50, damping = 0.5): [number, number] {
+    // 目标坐标
     let distX = x + dx;
     let distY = y + dy;
-    
-    const minX = el.offsetWidth - contentEl.scrollWidth - tolerance
-    if (minX > distX) {
-        distX = minX;
-    } else if (minX + tolerance > distX && minX <= distX) {
-        distX = x + dx / 2;
+
+    const MIN_X = el.offsetWidth - contentEl.scrollWidth - tolerance
+    if (MIN_X > distX) {
+        distX = MIN_X;
+    } else if (MIN_X + tolerance > distX && MIN_X <= distX) {
+        distX = x + dx * damping;
     } else if (0 >= distX) {
         // distX = Math.max(y, el.offsetWidth - contentEl.scrollWidth - tolerance);
     } else if (tolerance > distX) {
-        distX = x + dx / 2;
+        distX = x + dx * damping;
     } else {
         distX = tolerance
     }
 
-    const minY = el.offsetHeight - contentEl.scrollHeight - tolerance
-    if (minY > distY) {
-        distY = minY;
-    } else if (minY + tolerance > distY && minY <= distY) {
-        distY = y + dy / 2;
+    const MIN_Y = el.offsetHeight - contentEl.scrollHeight - tolerance
+    if (MIN_Y > distY) {
+        distY = MIN_Y;
+    } else if (MIN_Y + tolerance > distY && MIN_Y <= distY) {
+        distY = y + dy * damping;
     } else if (0 >= distY) {
         // distY = Math.max(y, el.offsetHeight - contentEl.scrollHeight - tolerance);
     } else if (tolerance > distY) {
-        distY = y + dy / 2;
+        distY = y + dy * damping;
     } else {
         distY = tolerance
     }
@@ -125,12 +131,15 @@ function _scroll([el, contentEl]: [HTMLElement, HTMLElement], [x, y]: [number, n
         const timeDiff = Date.now() - startTime;
         if (duration > timeDiff) {
             const activeXY: [number, number] = [easeOut(timeDiff, x, dx, duration), easeOut(timeDiff, y, dy, duration)];
-            _setContentTranslate([el, contentEl], [x, y], [activeXY[0] - x, activeXY[1] - y]);
+            console.log(activeXY, timeDiff);
+            _setContentTranslate([el, contentEl], [x, y], [activeXY[0] - x, activeXY[1] - y], 500, 1);
             onChangeRaf && onChangeRaf(raf(animate));
             onScroll && onScroll(activeXY);
+
         } else {
-            const activeXY = _setContentTranslate([el, contentEl], [x, y], [dx, dy]);
+            const activeXY = _setContentTranslate([el, contentEl], [x, y], [dx, dy], 500, 1);
             onScroll && onScroll(activeXY);
+            console.log(activeXY, timeDiff);
         }
     }
     animate()
@@ -145,3 +154,28 @@ function _scroll([el, contentEl]: [HTMLElement, HTMLElement], [x, y]: [number, n
 function easeOut(t: number, b: number, c: number, d: number) {
     return -c * (t /= d) * (t - 2) + b;
 }
+
+/**
+ * 获取最近的边界位置
+ * @param elements 外壳和内容元素
+ * @param postion 当前位置
+ * @returns 边界位置
+ */
+function getResetPostion([el, contentEl]: [HTMLElement, HTMLElement], [x, y]: [number, number]): [number, number] {
+    const MIN_X = el.offsetWidth - contentEl.scrollWidth;
+    const MAX_X = 0;
+    const MIN_Y = el.offsetHeight - contentEl.scrollHeight;
+    const MAX_Y = 0;
+    if (MIN_X > x) {
+        x = MIN_X
+    } else if (MAX_X < x) {
+        x = MAX_X;
+    }
+
+    if (MIN_Y > y) {
+        y = MIN_Y
+    } else if (MAX_Y < y) {
+        y = MAX_Y;
+    }
+    return [x, y];
+};
